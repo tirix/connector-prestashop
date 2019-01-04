@@ -8,6 +8,7 @@ import mock
 
 from freezegun import freeze_time
 
+from odoo import fields
 from .common import recorder, PrestashopTransactionCase, assert_no_job_delayed
 
 
@@ -53,7 +54,7 @@ class TestImportProduct(PrestashopTransactionCase):
     @freeze_time('2016-09-13 00:00:00')
     @assert_no_job_delayed
     def test_import_products(self):
-        from_date = '2016-09-01 00:00:00'
+        from_date = fields.Datetime.to_datetime('2016-09-01 00:00:00')
         self.backend_record.import_products_since = from_date
         self.backend_record.import_products()
         self.instance_delay_record.import_products.assert_called_with(

@@ -15,12 +15,9 @@
         "product",
         "product_multi_category",  # oca/product-attribute
         "connector_ecommerce",  # oca/connector-ecommerce
-        "base_multi_image",  # oca/product-attribute
+        "connector_base_product",
+        "base_multi_image",  # oca/server-tools
         "purchase",
-        "product_variant_supplierinfo",  # oca/product-variant
-        "stock_available",  # stock-logistics-warehouse
-        # TODO: perhaps not needed:
-        # "product_variant_cost_price",  # oca/product-variant
     ],
     "external_dependencies": {
         'python': [

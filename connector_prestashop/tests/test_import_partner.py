@@ -8,6 +8,7 @@ import mock
 
 from freezegun import freeze_time
 
+from odoo import fields
 from .common import recorder, PrestashopTransactionCase, assert_no_job_delayed
 
 
@@ -42,7 +43,7 @@ class TestImportPartner(PrestashopTransactionCase):
     @freeze_time('2016-09-13 00:00:00')
     @assert_no_job_delayed
     def test_import_partner_since(self):
-        from_date = '2016-09-01 00:00:00'
+        from_date = fields.Datetime.to_datetime('2016-09-01 00:00:00')
         self.backend_record.import_partners_since = from_date
         delay_record_path = ('odoo.addons.queue_job.models.base.'
                              'DelayableRecordset')
@@ -51,7 +52,7 @@ class TestImportPartner(PrestashopTransactionCase):
             delay_record_instance = delay_record_mock.return_value
             delay_record_instance.import_customers_since.assert_called_with(
                 backend_record=self.backend_record,
-                since_date='2016-09-01 00:00:00',
+                since_date=from_date,
             )
 
     @freeze_time('2016-09-13 00:00:00')
@@ -146,9 +147,8 @@ class TestImportPartner(PrestashopTransactionCase):
                 shop_group_id=self.shop_group,
                 shop_id=self.shop,
                 default_category_id=category_binding,
-                birthday='1970-01-15',
+                birthday=fields.Date.to_date('1970-01-15'),
             )]
-
         self.assert_records(expected, partner_bindings)
 
     @assert_no_job_delayed
@@ -201,7 +201,7 @@ class TestImportPartner(PrestashopTransactionCase):
 
         expected = [
             ExpectedAddress(
-                name='John DOE (My address)',
+                name='John DOE',
                 parent_id=partner,
                 street='16, Main street',
                 street2='2nd floor',

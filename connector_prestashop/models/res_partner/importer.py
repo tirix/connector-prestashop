@@ -82,13 +82,6 @@ class PartnerImportMapper(Component):
         return {'customer': True}
 
     @mapping
-    def is_company(self, record):
-        # This is sad because we _have_ to have a company partner if we want to
-        # store multiple adresses... but... well... we have customers who want
-        # to be billed at home and be delivered at work... (...)...
-        return {'is_company': True}
-
-    @mapping
     def company_id(self, record):
         return {'company_id': self.backend_record.company_id.id}
 
@@ -138,6 +131,7 @@ class AddressImportMapper(Component):
         ('postcode', 'zip'),
         ('date_add', 'date_add'),
         ('date_upd', 'date_upd'),
+        ('alias', 'alias'),
         (external_to_m2o('id_customer'), 'prestashop_partner_id'),
     ]
 
@@ -154,8 +148,6 @@ class AddressImportMapper(Component):
     @mapping
     def name(self, record):
         parts = [record['firstname'], record['lastname']]
-        if record['alias']:
-            parts.append('(%s)' % record['alias'])
         name = ' '.join(p.strip() for p in parts if p.strip())
         return {'name': name}
 

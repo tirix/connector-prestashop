@@ -79,4 +79,4 @@ class TestImportCarrier(PrestashopTransactionCase):
             )]
 
         self.assert_records(expected, binding)
-        self.assertEqual('My carrier', binding.product_id.name)
+        self.assertEqual('My carrier', binding.name)
