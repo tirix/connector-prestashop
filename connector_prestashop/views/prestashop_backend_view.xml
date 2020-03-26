@@ -45,7 +45,7 @@
                         <group col="4">
                             <field name="location" colspan="4" />
                             <field name="webservice_key" colspan="4" />
-
+                            <field name="default_language" colspan="4" />
                         </group>
                         <group>
                             <field name="version" />

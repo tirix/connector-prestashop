@@ -102,7 +102,7 @@ class ProductCategoryImporter(Component):
                     # not imported yet, retrieve name in default lang
                     values = self._split_per_language(
                         record, fields=['name', ])
-                    name = values[self._default_language]['name']
+                    name = values[self.backend_record.default_language]['name']
 
                 self.backend_record.add_checkpoint(
                     category, message=msg % (name, str(e)))

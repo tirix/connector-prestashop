@@ -11,6 +11,10 @@ from odoo.addons.base.models.res_partner import _tz_get
 
 _logger = logging.getLogger(__name__)
 
+@api.model
+def _lang_get(self):
+    return self.env['res.lang'].get_installed()
+
 
 class PrestashopBackend(models.Model):
     _name = 'prestashop.backend'
@@ -55,6 +59,13 @@ class PrestashopBackend(models.Model):
         string='Webservice key',
         help="You have to put it in 'username' of the PrestaShop "
              "Webservice api path invite"
+    )
+    default_language = fields.Selection(
+        _lang_get,
+        string='Default Language',
+        default=lambda self: self.env.lang,
+        required=True,
+        help='Default language to use when importing translated fields.'
     )
     warehouse_id = fields.Many2one(
         comodel_name='stock.warehouse',
